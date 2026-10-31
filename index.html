@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vansh Aggarwal | Academic Portfolio</title>
-    <!-- Tailwind CSS -->
+    <title>Vansh Aggarwal | Home</title>
+    
+    <!-- Tailwind CSS with Dark Mode Configuration -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -12,192 +13,310 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            50: '#f0f7ff',
-                            100: '#e0effe',
-                            500: '#0284c7',
-                            600: '#0369a1',
-                            800: '#075985',
-                            900: '#0c4a6e',
+                        academic: {
+                            blue: '#3685a6',      /* Matching Prof. Poddar's title blue in light mode */
+                            darkblue: '#2c7da0',
+                            link: '#007791',
+                            hoverlink: '#004f63',
+                            breadcrumb: '#5f6368',
+                            text: '#333333',
+                            subtext: '#555555'
                         }
+                    },
+                    fontFamily: {
+                        sans: ['Open Sans', 'Roboto', 'Helvetica Neue', 'sans-serif'],
+                        serif: ['Georgia', 'Cambria', 'serif']
                     }
                 }
             }
         }
     </script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Academic Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+    <!-- Initial Theme Check to Avoid Flash of White -->
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome & Academicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .serif { font-family: 'Lora', serif; }
+        body { 
+            font-family: 'Open Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .academic-link {
+            color: #007791;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .dark .academic-link {
+            color: #38bdf8;
+        }
+        .academic-link:hover {
+            color: #004f63;
+        }
+        .dark .academic-link:hover {
+            color: #7dd3fc;
+        }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-200 min-h-screen flex flex-col">
+<body class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-200 min-h-screen flex flex-col justify-between">
 
-    <!-- Navigation Bar -->
-    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
-        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-                Vansh Aggarwal
+    <!-- TOP HEADER / NAVIGATION (Google Sites Style with Night Mode Toggle) -->
+    <header class="w-full bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 py-3 px-6 sm:px-12 sticky top-0 z-40 backdrop-blur-md bg-white/90 dark:bg-slate-900/90">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <!-- Left Breadcrumb -->
+            <a href="#" class="text-sm font-light text-academic-breadcrumb dark:text-slate-400 tracking-tight hover:text-gray-800 dark:hover:text-slate-200 transition-colors">
+                vanshaggarwal/home
             </a>
-            <div class="flex items-center gap-6 text-sm font-medium">
-                <a href="#about" class="hover:text-brand-600 dark:hover:text-brand-500 transition">About</a>
-                <a href="#research" class="hover:text-brand-600 dark:hover:text-brand-500 transition">Research Focus</a>
-                <a href="#publications" class="hover:text-brand-600 dark:hover:text-brand-500 transition">Publications</a>
-                <a href="#education" class="hover:text-brand-600 dark:hover:text-brand-500 transition">Education</a>
-                <a href="#contact" class="hover:text-brand-600 dark:hover:text-brand-500 transition">Contact</a>
-                <button id="themeToggle" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition" aria-label="Toggle theme">
-                    <i class="fa-solid fa-moon dark:hidden"></i>
-                    <i class="fa-solid fa-sun hidden dark:inline"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
 
-    <main class="flex-grow max-w-5xl w-full mx-auto px-6 py-12 space-y-16">
+            <!-- Right Navigation Links & Controls -->
+            <nav class="flex items-center space-x-4 sm:space-x-6 text-sm font-normal text-academic-subtext dark:text-slate-300">
+                <a href="#home" class="hover:text-academic-blue dark:hover:text-sky-400 transition-colors">Home</a>
+                <a href="#research" class="hover:text-academic-blue dark:hover:text-sky-400 transition-colors">Research</a>
+                <a href="#publications" class="hover:text-academic-blue dark:hover:text-sky-400 transition-colors">Publications</a>
+                <a href="#education" class="hover:text-academic-blue dark:hover:text-sky-400 transition-colors">Education</a>
+                <a href="#contact" class="hover:text-academic-blue dark:hover:text-sky-400 transition-colors">Contact</a>
+                
+                <!-- Night Mode Toggle Button -->
+                <button 
+                    onclick="toggleTheme()" 
+                    aria-label="Toggle Night Mode" 
+                    title="Toggle Theme"
+                    class="p-1.5 rounded-md text-gray-500 dark:text-slate-300 hover:text-academic-blue dark:hover:text-sky-400 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+                >
+                    <i id="themeIcon" class="fa-solid fa-moon text-sm"></i>
+                </button>
+
+                <!-- Search Icon -->
+                <button 
+                    onclick="toggleSearchModal()" 
+                    aria-label="Search site" 
+                    title="Search"
+                    class="p-1.5 rounded-md text-gray-500 dark:text-slate-300 hover:text-academic-blue dark:hover:text-sky-400 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+                >
+                    <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main id="home" class="max-w-5xl w-full mx-auto px-6 sm:px-12 py-10 flex-grow space-y-16">
         
-        <!-- Hero Section -->
-        <section id="about" class="space-y-4">
-            <h1 class="text-4xl font-extrabold text-slate-900 dark:text-white sm:text-5xl tracking-tight">
-                Vansh Aggarwal
-            </h1>
-            <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
-                Mathematics Graduate from IISER Pune.
-            </p>
+        <!-- HERO / PROFILE SECTION (2 Columns) -->
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+            
+            <!-- Left Column: Image & Photo Caption -->
+            <div class="md:col-span-5 space-y-3">
+                <div class="border border-gray-200 dark:border-slate-700 p-1 bg-white dark:bg-slate-800 shadow-sm rounded-sm">
+                    <img 
+                        src="profile.jpeg" 
+                        alt="Vansh Aggarwal" 
+                        class="w-full h-auto object-cover block rounded-xs max-h-[420px]"
+                        onerror="this.onerror=null; this.src='https://placehold.co/600x420/3685a6/ffffff?text=Vansh+Aggarwal';"
+                    />
+                </div>
+                <p class="text-xs text-gray-500 dark:text-slate-400 leading-normal">
+                    Mathematics Graduate, IISER Pune.
+                </p>
+            </div>
+
+            <!-- Right Column: Name & Affiliation -->
+            <div class="md:col-span-7 space-y-4 pt-2">
+                <h1 class="text-4xl sm:text-5xl font-light tracking-normal text-academic-blue dark:text-sky-400">
+                    Vansh Aggarwal
+                </h1>
+                <p class="text-base sm:text-lg text-gray-700 dark:text-slate-300 font-normal">
+                    Mathematics Graduate from <a href="https://www.iiserpune.ac.in" target="_blank" rel="noopener noreferrer" class="academic-link">IISER Pune</a>.
+                </p>
+            </div>
         </section>
 
-        <!-- Research Focus Section -->
-        <section id="research" class="space-y-6">
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-3">
+        <!-- RESEARCH FOCUS SECTION -->
+        <section id="research" class="pt-6 border-t border-gray-100 dark:border-slate-800 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-light text-academic-blue dark:text-sky-400">
                 Research Focus
             </h2>
-            <div class="bg-white dark:bg-slate-800 rounded-xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm">
-                <p class="text-slate-700 dark:text-slate-300 leading-relaxed text-lg serif">
-                    Geometry and topology, especially differential. More specifically: Poisson geometry and related areas (foliation and lie algebra), Symplectic geometry, Lie algebroid and groupoids.
+            <div class="text-sm sm:text-base text-gray-700 dark:text-slate-300 leading-relaxed max-w-3xl">
+                <p>
+                    My research focus lies in studying smooth structures, especially Poisson and symplectic structure.
                 </p>
             </div>
         </section>
 
-        <!-- Publications & Preprints Section -->
-        <section id="publications" class="space-y-6">
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-3">
+        <!-- PUBLICATIONS & PREPRINTS SECTION -->
+        <section id="publications" class="pt-6 border-t border-gray-100 dark:border-slate-800 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-light text-academic-blue dark:text-sky-400">
                 Publications & Preprints
             </h2>
-            <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
-                <div class="flex justify-between items-start gap-4">
-                    <div class="space-y-1">
-                        <span class="inline-block px-2.5 py-0.5 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
-                            Preprint (2026)
-                        </span>
-                        <h3 class="text-xl font-semibold text-slate-900 dark:text-white">
-                            Equivariant Poisson structures on moment-angle manifolds and their quotients
-                        </h3>
-                        <p class="text-sm text-slate-600 dark:text-slate-400">
-                            <strong>V. Aggarwal</strong> and M. Poddar
-                        </p>
-                    </div>
-                </div>
+            
+            <div class="space-y-4 text-sm sm:text-base text-gray-800 dark:text-slate-200">
+                <div class="bg-gray-50/70 dark:bg-slate-800/60 border-l-2 border-academic-blue dark:border-sky-400 p-4 sm:p-5 rounded-r space-y-2">
+                    <p class="font-medium text-gray-900 dark:text-slate-100 leading-snug">
+                        "Equivariant Poisson structures on moment-angle manifolds and their quotients"
+                    </p>
+                    <p class="text-xs sm:text-sm text-gray-600 dark:text-slate-400">
+                        <span class="font-semibold text-gray-800 dark:text-slate-200">V. Aggarwal</span> and M. Poddar, <span class="italic">preprint</span>, 2026.
+                    </p>
+                    
+                    <div class="flex flex-wrap items-center gap-4 text-xs font-mono pt-2">
+                        <a href="https://arxiv.org/abs/2610.34090" target="_blank" rel="noopener noreferrer" class="academic-link flex items-center gap-1.5 font-normal">
+                            <i class="ai ai-arxiv"></i>
+                            <span>arXiv:2610.34090 [math.SG]</span>
+                        </a>
 
-                <div class="flex flex-wrap items-center gap-3 pt-2 text-sm">
-                    <a href="https://arxiv.org/abs/2610.34090" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-brand-600 dark:text-brand-500 hover:underline font-medium">
-                        <i class="ai ai-arxiv"></i>
-                        <span>arXiv:2610.34090 [math.SG]</span>
-                    </a>
-                    <button onclick="copyBibtex()" class="ml-auto text-xs px-3 py-1.5 rounded bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                        <i class="fa-regular fa-copy"></i>
-                        <span id="copyBtnText">Copy BibTeX</span>
-                    </button>
+                        <button onclick="copyBibtex()" class="text-gray-600 dark:text-slate-300 hover:text-academic-blue dark:hover:text-sky-400 transition-colors flex items-center gap-1 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 px-2.5 py-1 rounded">
+                            <i class="fa-regular fa-copy"></i>
+                            <span id="copyBtnText">Copy BibTeX</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Education Section -->
-        <section id="education" class="space-y-6">
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-3">
+        <!-- EDUCATION SECTION -->
+        <section id="education" class="pt-6 border-t border-gray-100 dark:border-slate-800 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-light text-academic-blue dark:text-sky-400">
                 Education
             </h2>
-            <div class="space-y-4">
-                <!-- IISER Pune -->
-                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm flex justify-between items-start">
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">Integrated Bachelors and Masters in Science (BS-MS)</h3>
-                        <p class="text-brand-600 dark:text-brand-500 font-medium">Indian Institute of Science Education and Research (IISER), Pune</p>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Master's thesis in mathematics under Prof. Mainak Poddar</p>
-                    </div>
-                    <span class="text-sm font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-700/50 px-3 py-1 rounded-md">2021 – 2026</span>
-                </div>
 
-                <!-- Senior Secondary -->
-                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm flex justify-between items-start">
+            <ul class="space-y-4 text-sm sm:text-base text-gray-700 dark:text-slate-300">
+                <li class="flex flex-col sm:flex-row sm:justify-between sm:items-start border-b border-gray-100 dark:border-slate-800 pb-3 gap-1">
                     <div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">Senior Secondary (PCM)</h3>
-                        <p class="text-slate-600 dark:text-slate-400 font-medium">Delhi Public School Ghaziabad</p>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Secured 94% in the Annual Board Exams</p>
+                        <span class="font-semibold text-gray-900 dark:text-slate-100">Integrated Bachelors and Masters in Science (BS-MS)</span>
+                        <div class="text-xs sm:text-sm text-gray-600 dark:text-slate-400">
+                            Indian Institute of Science Education and Research (IISER), Pune
+                        </div>
+                        <div class="text-xs text-gray-500 dark:text-slate-400 italic mt-0.5">
+                            Master's thesis in mathematics under Prof. Mainak Poddar
+                        </div>
                     </div>
-                    <span class="text-sm font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-700/50 px-3 py-1 rounded-md">2020</span>
-                </div>
+                    <span class="text-xs font-mono text-gray-500 dark:text-slate-400 bg-gray-100 dark:bg-slate-800 px-2 py-0.5 rounded self-start sm:self-auto">2021 – 2026</span>
+                </li>
 
-                <!-- Matriculation -->
-                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm flex justify-between items-start">
+                <li class="flex flex-col sm:flex-row sm:justify-between sm:items-start border-b border-gray-100 dark:border-slate-800 pb-3 gap-1">
                     <div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">Matriculation</h3>
-                        <p class="text-slate-600 dark:text-slate-400 font-medium">Ch. Chhabil Dass Public School</p>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Secured 90.6% in the Annual Board Exams</p>
+                        <span class="font-semibold text-gray-900 dark:text-slate-100">Senior Secondary (PCM)</span>
+                        <div class="text-xs sm:text-sm text-gray-600 dark:text-slate-400">
+                            Delhi Public School Ghaziabad (94%)
+                        </div>
                     </div>
-                    <span class="text-sm font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-700/50 px-3 py-1 rounded-md">2018</span>
-                </div>
-            </div>
+                    <span class="text-xs font-mono text-gray-500 dark:text-slate-400 bg-gray-100 dark:bg-slate-800 px-2 py-0.5 rounded self-start sm:self-auto">2020</span>
+                </li>
+
+                <li class="flex flex-col sm:flex-row sm:justify-between sm:items-start pb-1 gap-1">
+                    <div>
+                        <span class="font-semibold text-gray-900 dark:text-slate-100">Matriculation</span>
+                        <div class="text-xs sm:text-sm text-gray-600 dark:text-slate-400">
+                            Ch. Chhabil Dass Public School (90.6%)
+                        </div>
+                    </div>
+                    <span class="text-xs font-mono text-gray-500 dark:text-slate-400 bg-gray-100 dark:bg-slate-800 px-2 py-0.5 rounded self-start sm:self-auto">2018</span>
+                </li>
+            </ul>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="space-y-6">
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-3">
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="pt-6 border-t border-gray-100 dark:border-slate-800 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-light text-academic-blue dark:text-sky-400">
                 Contact
             </h2>
-            <div class="bg-white dark:bg-slate-800 rounded-xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
-                <p class="text-slate-600 dark:text-slate-300">
-                    Feel free to reach out via email or LinkedIn for research discussions, academic inquiries, or collaborations.
+            
+            <div class="text-sm sm:text-base text-gray-700 dark:text-slate-300 space-y-2">
+                <p class="text-xs sm:text-sm text-gray-600 dark:text-slate-400">
+                    Feel free to reach out via email or phone for research inquiries or academic correspondence:
                 </p>
-                
-                <div class="flex flex-wrap gap-4 text-sm">
-                    <a href="mailto:V.aggarwal.research@gmail.com" class="flex items-center gap-3 px-5 py-3 rounded-lg bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-500 transition shadow-sm font-medium">
-                        <i class="fa-regular fa-envelope text-brand-600 dark:text-brand-500 text-base"></i>
-                        <span>V.aggarwal.research@gmail.com</span>
-                    </a>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-5 py-3 rounded-lg bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-500 transition shadow-sm font-medium">
-                        <i class="fa-brands fa-linkedin text-brand-600 dark:text-brand-500 text-base"></i>
-                        <span>LinkedIn Profile</span>
-                    </a>
+                <div class="space-y-1.5 pt-1 font-normal">
+                    <p>
+                        <strong class="font-semibold text-gray-800 dark:text-slate-200">Email:</strong> 
+                        <a href="mailto:V.aggarwal.research@gmail.com" class="academic-link">V.aggarwal.research@gmail.com</a>
+                    </p>
+                    <p>
+                        <strong class="font-semibold text-gray-800 dark:text-slate-200">Phone:</strong> 
+                        <a href="tel:+919599008877" class="academic-link">+91-9599008877</a>
+                    </p>
+                    <p>
+                        <strong class="font-semibold text-gray-800 dark:text-slate-200">LinkedIn:</strong> 
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="academic-link">Vansh Aggarwal</a>
+                    </p>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-slate-200 dark:border-slate-800 py-6 text-center text-sm text-slate-500 dark:text-slate-400">
-        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
-            <p>© 2026 Vansh Aggarwal. All rights reserved.</p>
-            <p>Last updated: October 2026</p>
+    <!-- FOOTER (Classic Google Sites Aesthetic) -->
+    <footer class="w-full border-t border-gray-200 dark:border-slate-800 py-6 px-6 sm:px-12 text-xs text-gray-500 dark:text-slate-400 bg-white dark:bg-slate-900">
+        <div class="max-w-5xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <button aria-label="Site Info" onclick="toggleInfoModal()" class="w-5 h-5 rounded-full border border-gray-400 dark:border-slate-600 flex items-center justify-center text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200 hover:border-gray-600 dark:hover:border-slate-400 transition-colors">
+                    <i class="fa-solid fa-info text-[10px]"></i>
+                </button>
+                <span>Vansh Aggarwal • Mathematics Graduate, IISER Pune</span>
+            </div>
+            <span>Last updated: 2026</span>
         </div>
     </footer>
 
-    <!-- JavaScript for Theme & Utilities -->
+    <!-- BIBTEX NOTIFICATION TOAST -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-800 dark:bg-slate-100 text-white dark:text-slate-900 text-xs px-4 py-2.5 rounded shadow-lg opacity-0 transition-opacity duration-300 pointer-events-none z-50">
+        BibTeX copied to clipboard!
+    </div>
+
+    <!-- SITE INFO MODAL -->
+    <div id="infoModal" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-xl rounded-md max-w-sm w-full p-5 space-y-3 text-slate-800 dark:text-slate-100">
+            <div class="flex justify-between items-center border-b border-gray-100 dark:border-slate-700 pb-2">
+                <span class="text-xs font-semibold uppercase tracking-wider text-academic-blue dark:text-sky-400">Site Information</span>
+                <button onclick="toggleInfoModal()" class="text-gray-400 hover:text-gray-700 dark:hover:text-slate-200 text-sm">✕</button>
+            </div>
+            <div class="text-xs space-y-2 text-gray-600 dark:text-slate-300">
+                <p><strong>Vansh Aggarwal Academic Portfolio</strong></p>
+                <p>Mathematics Graduate, IISER Pune.</p>
+                <p class="text-gray-400 dark:text-slate-400">Designed with Tailwind CSS in classic minimal Google Sites aesthetic. Supports Dark/Light mode.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIMPLE SEARCH MODAL -->
+    <div id="searchModal" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 hidden flex items-start justify-center pt-24 px-4">
+        <div class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-xl rounded-md max-w-md w-full p-4 space-y-3">
+            <div class="flex justify-between items-center border-b border-gray-100 dark:border-slate-700 pb-2">
+                <span class="text-xs font-semibold text-gray-600 dark:text-slate-300 uppercase tracking-wider">Search Site</span>
+                <button onclick="toggleSearchModal()" class="text-gray-400 hover:text-gray-700 dark:hover:text-slate-200 text-sm">✕</button>
+            </div>
+            <input type="text" id="searchInput" oninput="performSearch()" placeholder="Type to search (e.g. Poisson, thesis)..." class="w-full text-sm px-3 py-2 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-100 rounded focus:outline-none focus:border-academic-blue dark:focus:border-sky-400">
+            <div id="searchResults" class="text-xs text-gray-600 dark:text-slate-300 space-y-1 max-h-40 overflow-y-auto"></div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT FOR THEME TOGGLE & UTILITIES -->
     <script>
-        // Dark Theme Toggle Logic
-        const themeToggleBtn = document.getElementById('themeToggle');
-        
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
+        // Update Theme Icon according to current mode
+        function updateThemeIcon() {
+            const themeIcon = document.getElementById('themeIcon');
+            if (!themeIcon) return;
+            if (document.documentElement.classList.contains('dark')) {
+                themeIcon.className = 'fa-solid fa-sun text-yellow-400 text-sm';
+            } else {
+                themeIcon.className = 'fa-solid fa-moon text-sm';
+            }
         }
 
-        themeToggleBtn.addEventListener('click', () => {
+        // Toggle Dark/Light Theme
+        function toggleTheme() {
             if (document.documentElement.classList.contains('dark')) {
                 document.documentElement.classList.remove('dark');
                 localStorage.theme = 'light';
@@ -205,7 +324,11 @@
                 document.documentElement.classList.add('dark');
                 localStorage.theme = 'dark';
             }
-        });
+            updateThemeIcon();
+        }
+
+        // Initialize Theme Icon on Load
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
 
         // Copy BibTeX Functionality
         function copyBibtex() {
@@ -218,10 +341,54 @@
             navigator.clipboard.writeText(bibtex).then(() => {
                 const btnText = document.getElementById('copyBtnText');
                 btnText.innerText = 'Copied!';
-                setTimeout(() => {
-                    btnText.innerText = 'Copy BibTeX';
-                }, 2000);
+                setTimeout(() => { btnText.innerText = 'Copy BibTeX'; }, 2000);
+
+                const toast = document.getElementById('toast');
+                toast.classList.remove('opacity-0');
+                setTimeout(() => { toast.classList.add('opacity-0'); }, 2500);
             });
+        }
+
+        // Modals Toggle
+        function toggleInfoModal() {
+            document.getElementById('infoModal').classList.toggle('hidden');
+        }
+
+        function toggleSearchModal() {
+            const modal = document.getElementById('searchModal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                document.getElementById('searchInput').focus();
+            }
+        }
+
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const resultsDiv = document.getElementById('searchResults');
+            
+            if (!query) {
+                resultsDiv.innerHTML = '';
+                return;
+            }
+
+            const sections = [
+                { title: 'Research Focus', id: 'research', text: 'poisson symplectic geometry smooth structures' },
+                { title: 'Publications', id: 'publications', text: 'equivariant moment-angle manifolds quotient poddar arxiv 2610.34090' },
+                { title: 'Education', id: 'education', text: 'iiser pune bs-ms thesis mainak poddar dps ghaziabad' },
+                { title: 'Contact', id: 'contact', text: 'email linkedin research phone 9599008877' }
+            ];
+
+            const matches = sections.filter(s => s.text.includes(query) || s.title.toLowerCase().includes(query));
+
+            if (matches.length === 0) {
+                resultsDiv.innerHTML = '<p class="text-gray-400 italic">No matching sections found.</p>';
+            } else {
+                resultsDiv.innerHTML = matches.map(m => `
+                    <a href="#${m.id}" onclick="toggleSearchModal()" class="block p-1.5 hover:bg-gray-100 dark:hover:bg-slate-700 rounded text-academic-blue dark:text-sky-400 font-medium">
+                        ${m.title}
+                    </a>
+                `).join('');
+            }
         }
     </script>
 </body>
